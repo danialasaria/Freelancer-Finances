@@ -1,5 +1,4 @@
 {
-  "homepage": ".",
   "name": "firebase-auth",
   "version": "0.1.0",
   "private": true,
@@ -17,6 +16,7 @@
     "web-vitals": "^2.1.2"
   },
   "scripts": {
+    "homepage": ".",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
