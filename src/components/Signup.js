@@ -21,6 +21,11 @@ const Signup = () => {
         {
             return setError('Password do not match')
         }
+        if (passwordRef.current.value.length < 6)
+        {
+            return setError('Password needs to be at least 6 characters')
+        }
+
 
         //just like c++ error checking
         try{ 
