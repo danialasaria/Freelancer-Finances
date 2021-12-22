@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "./static/css/main.1a8a0596.css",
-    "main.js": "./static/js/main.3aa5c8d2.js",
-    "index.html": "./index.html",
-    "main.1a8a0596.css.map": "./static/css/main.1a8a0596.css.map",
-    "main.3aa5c8d2.js.map": "./static/js/main.3aa5c8d2.js.map"
+    "main.css": "/Freelancer-Finances/static/css/main.1a8a0596.css",
+    "main.js": "/Freelancer-Finances/static/js/main.68ab8695.js",
+    "index.html": "/Freelancer-Finances/index.html",
+    "main.1a8a0596.css.map": "/Freelancer-Finances/static/css/main.1a8a0596.css.map",
+    "main.68ab8695.js.map": "/Freelancer-Finances/static/js/main.68ab8695.js.map"
   },
   "entrypoints": [
     "static/css/main.1a8a0596.css",
-    "static/js/main.3aa5c8d2.js"
+    "static/js/main.68ab8695.js"
   ]
 }
