@@ -29,7 +29,7 @@ export function AuthProvider({children}) {
     }
 
     function resetPassword(email) {
-        return auth.sendPasswordResetEmail
+        return auth.sendPasswordResetEmail(email)
     }
 
     function updateEmail(email) {
@@ -56,11 +56,11 @@ export function AuthProvider({children}) {
     const value = {
         currentUser,
         login,
+        signup,
         logout,
         resetPassword,
-        updatePassword,
         updateEmail,
-        signup
+        updatePassword
     }
 
     //return to use in rest of application

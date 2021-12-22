@@ -3,7 +3,7 @@ import { Card, Form, Button, Alert } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext'
 import { Link, useHistory } from "react-router-dom"
 
-const Login = () => {
+export default function Login() {
     //list of states that we can use
     const emailRef = useRef()
     const passwordRef = useRef()
@@ -26,7 +26,7 @@ const Login = () => {
             history.push('/')
         } catch{
             //error state with custom message
-            setError("Failed to create an account")
+            setError("Failed to log in")
         }
         setLoading(false)
     }
@@ -64,4 +64,3 @@ const Login = () => {
     )
 }
 
-export default Login;
