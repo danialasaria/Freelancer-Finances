@@ -11,16 +11,50 @@ export default function Login() {
     const [error, setError] = useState("")
     const [loading, setLoading] = useState(false)
     const history = useHistory()
+    
+    // const userEmail = localStorage.getItem("useremail");
+    // if(userEmail)
+    // {
+    //     const Email = JSON.parse(userEmail);
+    //     const userPassword = localStorage.getItem("userPassword");
+    //     const Password = JSON.parse(userPassword);
+    //     console.log(Email)
+    //     //console.log(emailRef.current.value)
+    //     try{ 
+
+    //         setError("")
+    //         //setLoading disables the user from being able to create multiple accounts as they must pause
+    //         setLoading(true)
+    //         //save login in local storage
+    //         console.log(Email)
+    //         console.log(Password)
+    //         //login(Email, Password)
+    //         // //route to dashboard if login successful
+    //         // history.push('/')
+    //     } catch{
+    //         //error state with custom message
+    //         setError("Failed to log in")
+    //     }
+    // }
+    // if (userEmail) {
+    //     const Email = JSON.parse(userEmail);
+    //     const userPassword = localStorage.getItem("userPassword");
+    //     const Password = JSON.parse(userPassword);
+    //     login(Email, Password)
+    //     history.push('/')
+    //   }
 
     async function handleSubmit(e) {
         e.preventDefault()
-
         //if when signing up passwords don't match
         //just like c++ error checking
         try{ 
             setError("")
             //setLoading disables the user from being able to create multiple accounts as they must pause
             setLoading(true)
+            //save login in local storage
+            // localStorage.setItem("useremail", JSON.stringify(emailRef.current.value));
+            // localStorage.setItem("userpassword", JSON.stringify(passwordRef.current.value));
             await login(emailRef.current.value, passwordRef.current.value)
             //route to dashboard if login successful
             history.push('/')

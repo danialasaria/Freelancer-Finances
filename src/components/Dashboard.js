@@ -3,6 +3,8 @@ import { Card, Button, Alert } from "react-bootstrap"
 //this allows to import current user
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
+import TableData from "./Form"
+import Tableupdate from "./Tableupdate"
 
 export default function Dashboard() {
   const [error, setError] = useState("")
@@ -22,12 +24,9 @@ export default function Dashboard() {
 
   return (
     <>
-      <Card>
-        <Card.Body>
-          <h2 className="text-center mb-4">Card 2</h2>
-        </Card.Body>
-      </Card>
-      <Card>
+    {/* <TableData className = "w-100" style={{maxWidth: "300px "}}/> */}
+    <Tableupdate />
+      <Card className="mt-4">
         <Card.Body>
           <h2 className="text-center mb-4">Profile</h2>
           {error && <Alert variant="danger">{error}</Alert>}
