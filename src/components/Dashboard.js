@@ -4,7 +4,7 @@ import { Card, Button, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
 import TableData from "./Form"
-import Tableupdate from "./Tableupdate"
+import MainTable from "./MainTable"
 
 export default function Dashboard() {
   const [error, setError] = useState("")
@@ -25,7 +25,7 @@ export default function Dashboard() {
   return (
     <>
     {/* <TableData className = "w-100" style={{maxWidth: "300px "}}/> */}
-    <Tableupdate />
+    <MainTable />
       <Card className="mt-4">
         <Card.Body>
           <h2 className="text-center mb-4">Profile</h2>

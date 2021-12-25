@@ -12,7 +12,7 @@ const app = firebase.initializeApp({
 })
 
 var database = firebase.database();
-
+var ref = firebase.database().ref()
 export const auth = app.auth()
 export default app
-export { database }
+export { database, ref }

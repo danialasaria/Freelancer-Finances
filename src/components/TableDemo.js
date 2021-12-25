@@ -15,9 +15,15 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { database } from '../firebase';
-import { emailRef } from "./Login"
+import { database, ref } from '../firebase';
+import { useAuth } from '../contexts/AuthContext'
 
+
+// const starCountRef = ref(db, 'posts/' + postId + '/starCount');
+// onValue(starCountRef, (snapshot) => {
+//   const data = snapshot.val();
+//   updateStarCount(postElement, data);
+// });
 
 // Creating styles
 const useStyles = makeStyles({
@@ -41,7 +47,7 @@ function TableDemo() {
 	// Defining a state named rows
 	// which we can update by calling on setRows function
 	const [rows, setRows] = useState([
-		{ id: 1, firstname: "", price: "", city: "" },
+		{ id: 1, firstname: "", price: "", date: "" },
 	]);
 
 	// Initial states
@@ -49,6 +55,7 @@ function TableDemo() {
 	const [isEdit, setEdit] = React.useState(false);
 	const [disable, setDisable] = React.useState(true);
 	const [showConfirm, setShowConfirm] = React.useState(false);
+	const { currentUser } = useAuth()
 
 	// Function For closing the alert snackbar
 	const handleClose = (event, reason) => {
@@ -64,7 +71,7 @@ function TableDemo() {
 			...rows,
 			{
 				id: rows.length + 1, firstname: "",
-				price: "", city: ""
+				price: "", date: ""
 			},
 		]);
 		setEdit(true);
@@ -77,8 +84,20 @@ function TableDemo() {
 		setEdit(!isEdit);
 	};
 
+    const convertEmail = (userEmail) => {
+		// If edit mode is true setEdit will
+		// set it to false and vice versa
+		let email = userEmail.replace(".",">")
+		email = email.replace("#",">")
+		email = email.replace("$",">")
+		email = email.replace("[",">")
+		email = email.replace("]",">")
+		return email
+	};
+
     const Push = () => {
-        database.ref(emailRef).set({
+		const userEmail = convertEmail(currentUser.email)
+        database.ref(userEmail).set({
           rows : rows,
         }).catch(alert);
       }
@@ -116,12 +135,63 @@ function TableDemo() {
 		list.splice(i, 1);
 		setRows(list);
 		setShowConfirm(false);
+
+		const userEmail = convertEmail(currentUser.email)
+		const ref = database.ref(userEmail + '/rows/'+ i);
+		ref.set(null)
+
+		// Attach an asynchronous callback to read the data at our posts reference
+		// ref.on('value', (snapshot) => {
+		// console.log(snapshot.val());
+		// }, (errorObject) => {
+		// console.log('The read failed: ' + errorObject.name);
+		// }); 
 	};
 
 	// Handle the case of delete confirmation
 	// where user click no
 	const handleNo = () => {
 		setShowConfirm(false);
+	};
+
+	const populateTable = () => {
+		//while(current row exists) - call add func with these paramaters 
+		let count = 0
+		const userEmail = convertEmail(currentUser.email)
+		var userData;
+		while(true)
+		{
+			const ref = database.ref(userEmail + '/rows/'+ count);
+			ref.once("value", snapshot => {
+				userData = snapshot.val();
+					if(userData)
+					{
+						console.log(userData)
+						const firstnameval = userData["firstname"]
+						const idval = userData["id"]
+						const priceval = userData["price"]
+						const dateval = userData["date"]
+						setRows([
+							...rows,
+							{
+								id: idval, firstname: firstnameval,
+								price: priceval, date: dateval
+							},
+						]);
+						// setEdit(true);
+						// handleSave()
+						count++
+					}
+				    else {
+					console.log("no data there")
+				  }
+			});
+			if(!userData)
+			{
+				break
+			}
+		}
+	
 	};
 
 return (
@@ -163,6 +233,10 @@ return (
 			</div>
 			) : (
 			<div>
+				<Button onClick={populateTable}>
+				<AddBoxIcon onClick={populateTable} />
+				Populate
+				</Button>
 				<Button onClick={handleAdd}>
 				<AddBoxIcon onClick={handleAdd} />
 				ADD
@@ -186,7 +260,8 @@ return (
 			<TableRow>
 			<TableCell>First Name</TableCell>
 			<TableCell>Price</TableCell>
-			<TableCell align="center">City</TableCell>
+			<TableCell >Date</TableCell>
+			{/* <TableCell align="center">City</TableCell> */}
 			<TableCell align="center"></TableCell>
 			</TableRow>
 		</TableHead>
@@ -212,6 +287,13 @@ return (
 						/>
 						</TableCell>
 						<TableCell padding="none">
+						<input
+							value={row.date}
+							name="date"
+							onChange={(e) => handleInputChange(e, i)}
+						/>
+						</TableCell>
+						{/* <TableCell padding="none">
 						<select
 							style={{ width: "100px" }}
 							name="city"
@@ -225,7 +307,7 @@ return (
 							<option value="Amaravati">Amaravati</option>
 							<option value="Pulgaon">Pulgaon</option>
 						</select>
-						</TableCell>
+						</TableCell> */}
 					</div>
 					) : (
 					<div>
@@ -235,9 +317,12 @@ return (
 						<TableCell component="th" scope="row">
 						{row.price}
 						</TableCell>
-						<TableCell component="th" scope="row" align="center">
-						{row.city}
+						<TableCell component="th" scope="row">
+						{row.date}
 						</TableCell>
+						{/* <TableCell component="th" scope="row" align="center">
+						{row.city}
+						</TableCell> */}
 						<TableCell
 						component="th"
 						scope="row"

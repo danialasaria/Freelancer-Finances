@@ -1,7 +1,7 @@
 import React from "react";
 import TableDemo from "./TableDemo";
 
-function TableUpdate() {
+function MainTable() {
 	return (
 		<div>
 			{/* Header with inline css */}
@@ -18,4 +18,4 @@ function TableUpdate() {
 	)
 }
 
-export default TableUpdate;
+export default MainTable;
