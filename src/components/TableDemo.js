@@ -47,7 +47,7 @@ function TableDemo() {
 	// Defining a state named rows
 	// which we can update by calling on setRows function
 	const [rows, setRows] = useState([
-		{ id: 1, firstname: "", price: "", date: "" },
+		 { id: "", firstname: "", price: "", date: "" },
 	]);
 
 	// Initial states
@@ -156,43 +156,20 @@ function TableDemo() {
 
 	const populateTable = () => {
 		//while(current row exists) - call add func with these paramaters 
-		let count = 0
 		const userEmail = convertEmail(currentUser.email)
-		var userData;
-		while(true)
-		{
-			const ref = database.ref(userEmail + '/rows/'+ count);
-			ref.once("value", snapshot => {
-				userData = snapshot.val();
-					if(userData)
-					{
-						console.log(userData)
-						const firstnameval = userData["firstname"]
-						const idval = userData["id"]
-						const priceval = userData["price"]
-						const dateval = userData["date"]
-						setRows([
-							...rows,
-							{
-								id: idval, firstname: firstnameval,
-								price: priceval, date: dateval
-							},
-						]);
-						// setEdit(true);
-						// handleSave()
-						count++
-					}
-				    else {
-					console.log("no data there")
-				  }
+		var userData;						 
+		const ref = database.ref(userEmail + '/rows/');
+		ref.once("value", snapshot => {
+		userData = snapshot.val();
+			if(userData)
+				{
+					setRows(userData);
+				}
+		 	else {
+				console.log("no data there")
+				}
 			});
-			if(!userData)
-			{
-				break
-			}
 		}
-	
-	};
 
 return (
 	<TableBody>
@@ -213,7 +190,7 @@ return (
 			<div>
 				<Button onClick={handleAdd}>
 				<AddBoxIcon onClick={handleAdd} />
-				ADD
+				Add Lesson
 				</Button>
 				{rows.length !== 0 && (
 				<div>
@@ -239,7 +216,7 @@ return (
 				</Button>
 				<Button onClick={handleAdd}>
 				<AddBoxIcon onClick={handleAdd} />
-				ADD
+				Add Lesson
 				</Button>
 				<Button align="right" onClick={handleEdit}>
 				<CreateIcon />

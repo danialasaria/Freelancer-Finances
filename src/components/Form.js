@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import StudentForm from './Table';
-import jsonData from '../data.json';
 
 function TableData() {
-const [studentData, setStudentData] = useState(jsonData);
+const [studentData, setStudentData] = useState();
 
 const tableRows = studentData.map((info) => {
 	return (
