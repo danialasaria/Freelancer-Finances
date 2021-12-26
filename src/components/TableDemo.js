@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState  } from "react";
 import CreateIcon from "@material-ui/icons/Create";
 import {
 	Box, Button, Snackbar, Table,
@@ -18,13 +18,6 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { database, ref } from '../firebase';
 import { useAuth } from '../contexts/AuthContext'
 
-
-// const starCountRef = ref(db, 'posts/' + postId + '/starCount');
-// onValue(starCountRef, (snapshot) => {
-//   const data = snapshot.val();
-//   updateStarCount(postElement, data);
-// });
-
 // Creating styles
 const useStyles = makeStyles({
 	root: {
@@ -40,18 +33,19 @@ const useStyles = makeStyles({
 	},
 });
 
-function TableDemo() {
+function TableDemo(Info) {
 	// Creating style object
 	const classes = useStyles();
 
 	// Defining a state named rows
 	// which we can update by calling on setRows function
-	const [rows, setRows] = useState([
-		 { id: "", firstname: "", price: "", date: "" },
-	]);
+	const [rows, setRows] = useState(Info);
+	console.log("HEEEEE")
+		//  { id: "", firstname: "", price: "", date: "" },
+
 
 	// Initial states
-	const [open, setOpen] = React.useState(false);
+	const [open, setOpen] = React.useState(true);
 	const [isEdit, setEdit] = React.useState(false);
 	const [disable, setDisable] = React.useState(true);
 	const [showConfirm, setShowConfirm] = React.useState(false);
@@ -154,23 +148,23 @@ function TableDemo() {
 		setShowConfirm(false);
 	};
 
-	const populateTable = () => {
-		//while(current row exists) - call add func with these paramaters 
-		const userEmail = convertEmail(currentUser.email)
-		var userData;						 
-		const ref = database.ref(userEmail + '/rows/');
-		ref.once("value", snapshot => {
-		userData = snapshot.val();
-			if(userData)
-				{
-					setRows(userData);
-				}
-		 	else {
-				console.log("no data there")
-				}
-			});
-		}
-
+	// function populateTable() {
+	// 	const userEmail = convertEmail(currentUser.email)
+	// 	var userData;						 
+	// 	const ref = database.ref(userEmail + '/rows/');
+	// 	ref.once("value", snapshot => {
+	// 	userData = snapshot.val();
+	// 		if(userData)
+	// 			{
+	// 				setRows(userData);
+	// 			}
+	// 	 	else {
+	// 			console.log("no data there")
+	// 			}
+	// 		});
+	// 		return
+	// 	}
+		
 return (
 	<TableBody>
 	<Snackbar
@@ -210,10 +204,10 @@ return (
 			</div>
 			) : (
 			<div>
-				<Button onClick={populateTable}>
-				<AddBoxIcon onClick={populateTable} />
-				Populate
-				</Button>
+				{/* <Button onClick={populateTable()}>
+				<AddBoxIcon onClick={populateTable()} />
+				Restore Previous Lessons
+				</Button> */}
 				<Button onClick={handleAdd}>
 				<AddBoxIcon onClick={handleAdd} />
 				Add Lesson
@@ -270,21 +264,6 @@ return (
 							onChange={(e) => handleInputChange(e, i)}
 						/>
 						</TableCell>
-						{/* <TableCell padding="none">
-						<select
-							style={{ width: "100px" }}
-							name="city"
-							value={row.city}
-							onChange={(e) => handleInputChange(e, i)}
-						>
-							<option value=""></option>
-							<option value="Karanja">Karanja</option>
-							<option value="Hingoli">Hingoli</option>
-							<option value="Bhandara">Bhandara</option>
-							<option value="Amaravati">Amaravati</option>
-							<option value="Pulgaon">Pulgaon</option>
-						</select>
-						</TableCell> */}
 					</div>
 					) : (
 					<div>
@@ -360,6 +339,7 @@ return (
 	</Box>
 	</TableBody>
 );
+
 }
 
 export default TableDemo;
