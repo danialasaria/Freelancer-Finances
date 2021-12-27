@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import TableDemo from "./TableDemo";
 import { database, ref } from '../firebase';
 import { useAuth } from '../contexts/AuthContext'
-
+import Statistics from './Stats'
 
 const convertEmail = (userEmail) => {
 	// If edit mode is true setEdit will
@@ -36,6 +36,9 @@ function MainTable() {
 	  }, []);
 	return (
 		<div>
+			<div style = {{position: 'absolute', top: '3vw',}}>
+			{Statistics(Info) }
+			</div>
 			{/* Header with inline css */}
 			<h1
 				style={{
