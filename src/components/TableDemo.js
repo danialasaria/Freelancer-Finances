@@ -147,6 +147,7 @@ function TableDemo(Info) {
 		const list = [...rows];
 		list[index][name] = value;
 		setRows(list);
+		handleSave()
 		console.log(totalMade())
 	};
 
@@ -197,21 +198,21 @@ return (
 				<AddBoxIcon onClick={handleAdd} />
 				Add Lesson
 				</Button>
-				{rows.length !== 0 && (
-				<div>
-					{disable ? (
-					<Button disabled align="right" onClick={handleSave}>
-						<DoneIcon />
-						SAVE
-					</Button>
-					) : (
-					<Button align="right" onClick={handleSave}>
-						<DoneIcon />
-						SAVE
-					</Button>
-					)}
-				</div>
-				)}
+				{/* {rows.length !== 0 && ( */}
+				{/* // <div>
+				// 	{disable ? ( */}
+				{/* // 	<Button disabled align="right" onClick={handleSave}>
+				// 		<DoneIcon />
+				// 		SAVE
+				// 	</Button>
+				// 	) : (
+				// 	<Button align="right" onClick={handleSave}>
+				// 		<DoneIcon />
+				// 		SAVE
+				// 	</Button>
+				// 	)}
+				// </div>
+				)} */}
 			</div>
 			) : (
 			<div>
@@ -295,15 +296,16 @@ return (
 						</TableCell>
 					</div>
 					)}
-					{isEdit ? (
+					{/* {isEdit ? 
+					(
 					<Button className="mr10" onClick={handleConfirm}>
 						<ClearIcon />
 					</Button>
-					) : (
+					) : ( */}
 					<Button className="mr10" onClick={handleConfirm}>
 						<DeleteOutlineIcon />
 					</Button>
-					)}
+					{/* )} */}
 					{showConfirm && (
 					<div>
 						<Dialog
