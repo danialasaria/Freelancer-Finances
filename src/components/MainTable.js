@@ -37,7 +37,6 @@ function MainTable() {
 	return (
 		<div>
 			{/* Header with inline css */}
-			{console.log(Info)}
 			<h1
 				style={{
 					display: 'flex', justifyContent: 'center', padding: '15px',

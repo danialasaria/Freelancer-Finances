@@ -3,9 +3,8 @@ import { Card, Button, Alert } from "react-bootstrap"
 //this allows to import current user
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
-import MainTable from "./MainTable"
 
-export default function Dashboard() {
+export default function Profile() {
   const [error, setError] = useState("")
   const { currentUser, logout } = useAuth()
   const history = useHistory()
@@ -24,10 +23,21 @@ export default function Dashboard() {
   return (
     <>
     {/* <TableData className = "w-100" style={{maxWidth: "300px "}}/> */}
-    <MainTable />
-    <div style = {{position: 'absolute', right: '10vw', top: '3vw',}}>
-            <Link to="/profile">Profile</Link>
-    </div>
+      <Card className="mt-4">
+        <Card.Body>
+          <h2 className="text-center mb-4">Profile</h2>
+          {error && <Alert variant="danger">{error}</Alert>}
+          <strong>Email:</strong> {currentUser.email}
+          <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
+            Update Profile
+          </Link>
+        </Card.Body>
+      </Card>
+      <div className="w-100 text-center mt-2">
+        <Button variant="link" onClick={handleLogout}>
+          Log Out
+        </Button>
+      </div>
     </>
   )
 }

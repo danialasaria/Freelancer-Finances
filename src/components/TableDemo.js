@@ -17,7 +17,11 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { database, ref } from '../firebase';
 import { useAuth } from '../contexts/AuthContext'
-
+import { styled } from '@mui/material/styles';
+import { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import Paper from '@mui/material/Paper';
+import "../Styles/Table.css"
 // Creating styles
 const useStyles = makeStyles({
 	root: {
@@ -26,7 +30,7 @@ const useStyles = makeStyles({
 		},
 	},
 	table: {
-		minWidth: 650,
+		 maxWidth: 600,
 	},
 	snackbar: {
 		bottom: "104px",
@@ -35,12 +39,30 @@ const useStyles = makeStyles({
 
 function TableDemo(Info) {
 	// Creating style object
+	const StyledTableCell = styled(TableCell)(({ theme }) => ({
+	[`&.${tableCellClasses.head}`]: {
+		backgroundColor: theme.palette.common.black,
+		color: theme.palette.common.white,
+	},
+	[`&.${tableCellClasses.body}`]: {
+		fontSize: 14,
+	},
+	}));
 	const classes = useStyles();
+
+	const StyledTableRow = styled(TableRow)(({ theme }) => ({
+	  '&:nth-of-type(odd)': {
+	    backgroundColor: theme.palette.action.hover,
+	  },
+	  // hide last border
+	  '&:last-child td, &:last-child th': {
+	    border: 0,
+	  },
+	}));
 
 	// Defining a state named rows
 	// which we can update by calling on setRows function
 	const [rows, setRows] = useState(Info);
-	console.log("HEEEEE")
 		//  { id: "", firstname: "", price: "", date: "" },
 
 
@@ -59,13 +81,21 @@ function TableDemo(Info) {
 		setOpen(false);
 	};
 
+	function totalMade() {
+		var total = 0
+		for(let i = 0; i < rows; i++)
+		{
+			total += parseInt(rows[i]['price'])
+		}
+		return total
+	};
 	// Function For adding new row object
 	const handleAdd = () => {
 		setRows([
 			...rows,
 			{
 				id: rows.length + 1, firstname: "",
-				price: "", date: ""
+				price: " ", date: ""
 			},
 		]);
 		setEdit(true);
@@ -76,6 +106,8 @@ function TableDemo(Info) {
 		// If edit mode is true setEdit will
 		// set it to false and vice versa
 		setEdit(!isEdit);
+		// setDisable(true);
+		// setOpen(true);
 	};
 
     const convertEmail = (userEmail) => {
@@ -115,6 +147,7 @@ function TableDemo(Info) {
 		const list = [...rows];
 		list[index][name] = value;
 		setRows(list);
+		console.log(totalMade())
 	};
 
 	// Showing delete confirmation to users
@@ -133,13 +166,6 @@ function TableDemo(Info) {
 		const userEmail = convertEmail(currentUser.email)
 		const ref = database.ref(userEmail + '/rows/'+ i);
 		ref.set(null)
-
-		// Attach an asynchronous callback to read the data at our posts reference
-		// ref.on('value', (snapshot) => {
-		// console.log(snapshot.val());
-		// }, (errorObject) => {
-		// console.log('The read failed: ' + errorObject.name);
-		// }); 
 	};
 
 	// Handle the case of delete confirmation
@@ -147,25 +173,9 @@ function TableDemo(Info) {
 	const handleNo = () => {
 		setShowConfirm(false);
 	};
-
-	// function populateTable() {
-	// 	const userEmail = convertEmail(currentUser.email)
-	// 	var userData;						 
-	// 	const ref = database.ref(userEmail + '/rows/');
-	// 	ref.once("value", snapshot => {
-	// 	userData = snapshot.val();
-	// 		if(userData)
-	// 			{
-	// 				setRows(userData);
-	// 			}
-	// 	 	else {
-	// 			console.log("no data there")
-	// 			}
-	// 		});
-	// 		return
-	// 	}
 		
 return (
+	<TableContainer component={Paper}>
 	<TableBody>
 	<Snackbar
 		open={open}
@@ -179,6 +189,7 @@ return (
 	</Snackbar>
 	<Box margin={1}>
 		<div style={{ display: "flex", justifyContent: "space-between" }}>
+		{/*if isEdit is true then show the following div*/}
 		<div>
 			{isEdit ? (
 			<div>
@@ -204,36 +215,30 @@ return (
 			</div>
 			) : (
 			<div>
-				{/* <Button onClick={populateTable()}>
-				<AddBoxIcon onClick={populateTable()} />
-				Restore Previous Lessons
-				</Button> */}
 				<Button onClick={handleAdd}>
 				<AddBoxIcon onClick={handleAdd} />
 				Add Lesson
 				</Button>
-				<Button align="right" onClick={handleEdit}>
+				{/* <Button align="right" onClick={handleEdit}>
 				<CreateIcon />
 				EDIT
-				</Button>
+				</Button> */}
 			</div>
 			)}
 		</div>
 		</div>
-		<TableRow align="center"></TableRow>
-
+		{/* <TableRow align="center"></TableRow> */}
 		<Table
 		className={classes.table}
 		size="small"
 		aria-label="a dense table"
 		>
-		<TableHead>
+		<TableHead className="table">
 			<TableRow>
-			<TableCell>First Name</TableCell>
-			<TableCell>Price</TableCell>
-			<TableCell >Date</TableCell>
-			{/* <TableCell align="center">City</TableCell> */}
-			<TableCell align="center"></TableCell>
+			<StyledTableCell padding = "normal">Student Name</StyledTableCell>
+			<StyledTableCell padding = "normal">Price</StyledTableCell>
+			<StyledTableCell padding = "normal">Date</StyledTableCell>
+			{/* <TableCell align="center"></TableCell> */}
 			</TableRow>
 		</TableHead>
 		<TableBody>
@@ -243,21 +248,21 @@ return (
 				<TableRow>
 					{isEdit ? (
 					<div>
-						<TableCell padding="none">
+						<TableCell padding="normal">
 						<input
 							value={row.firstname}
 							name="firstname"
 							onChange={(e) => handleInputChange(e, i)}
 						/>
 						</TableCell>
-						<TableCell padding="none">
+						<TableCell padding="normal">
 						<input
 							value={row.price}
 							name="price"
 							onChange={(e) => handleInputChange(e, i)}
 						/>
 						</TableCell>
-						<TableCell padding="none">
+						<TableCell padding="normal">
 						<input
 							value={row.date}
 							name="date"
@@ -266,24 +271,28 @@ return (
 						</TableCell>
 					</div>
 					) : (
-					<div>
-						<TableCell component="th" scope="row">
-						{row.firstname}
+						<div>
+						<TableCell padding="normal">
+						<input
+							value={row.firstname}
+							name="firstname"
+							onChange={(e) => handleInputChange(e, i)}
+						/>
 						</TableCell>
-						<TableCell component="th" scope="row">
-						{row.price}
+						<TableCell padding="normal">
+						<input
+							value={row.price}
+							name="price"
+							onChange={(e) => handleInputChange(e, i)}
+						/>
 						</TableCell>
-						<TableCell component="th" scope="row">
-						{row.date}
+						<TableCell padding="normal">
+						<input
+							value={row.date}
+							name="date"
+							onChange={(e) => handleInputChange(e, i)}
+						/>
 						</TableCell>
-						{/* <TableCell component="th" scope="row" align="center">
-						{row.city}
-						</TableCell> */}
-						<TableCell
-						component="th"
-						scope="row"
-						align="center"
-						></TableCell>
 					</div>
 					)}
 					{isEdit ? (
@@ -338,8 +347,61 @@ return (
 		</Table>
 	</Box>
 	</TableBody>
+	</TableContainer>
 );
 
 }
 
 export default TableDemo;
+
+
+// const StyledTableCell = styled(TableCell)(({ theme }) => ({
+//   [`&.${tableCellClasses.head}`]: {
+//     backgroundColor: theme.palette.common.black,
+//     color: theme.palette.common.white,
+//   },
+//   [`&.${tableCellClasses.body}`]: {
+//     fontSize: 14,
+//   },
+// }));
+
+// const StyledTableRow = styled(TableRow)(({ theme }) => ({
+//   '&:nth-of-type(odd)': {
+//     backgroundColor: theme.palette.action.hover,
+//   },
+//   // hide last border
+//   '&:last-child td, &:last-child th': {
+//     border: 0,
+//   },
+// }));
+
+// export default function CustomizedTables() {
+//   return (
+//     <TableContainer component={Paper}>
+//       <Table sx={{ minWidth: 700 }} aria-label="customized table">
+//         <TableHead>
+//           <TableRow>
+//             <StyledTableCell>Dessert (100g serving)</StyledTableCell>
+//             <StyledTableCell align="right">Calories</StyledTableCell>
+//             <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
+//             <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
+//             <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
+//           </TableRow>
+//         </TableHead>
+//         <TableBody>
+//           {rows.map((row) => (
+//             <StyledTableRow key={row.name}>
+//               <StyledTableCell component="th" scope="row">
+//                 {row.name}
+//               </StyledTableCell>
+//               <StyledTableCell align="right">{row.calories}</StyledTableCell>
+//               <StyledTableCell align="right">{row.fat}</StyledTableCell>
+//               <StyledTableCell align="right">{row.carbs}</StyledTableCell>
+//               <StyledTableCell align="right">{row.protein}</StyledTableCell>
+//             </StyledTableRow>
+//           ))}
+//         </TableBody>
+//       </Table>
+//     </TableContainer>
+//   );
+// }
