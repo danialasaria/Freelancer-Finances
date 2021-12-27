@@ -140,6 +140,7 @@ function TableDemo(Info) {
 		list[index][name] = value;
 		setRows(list);
 		handleSave()
+		
 	};
 
 	// Showing delete confirmation to users
@@ -165,6 +166,15 @@ function TableDemo(Info) {
 	const handleNo = () => {
 		setShowConfirm(false);
 	};
+
+	function ifDate(row) {
+		if(row.date === "")
+		{
+			return "11/05/2001"
+		}
+		console.log(row.date)
+		return row.date
+	}
 		
 return (
 	<TableContainer component={Paper}>
@@ -228,7 +238,7 @@ return (
 		<TableHead className="table">
 			<TableRow>
 			<StyledTableCell padding = "normal">Student Name</StyledTableCell>
-			<StyledTableCell padding = "normal">Price</StyledTableCell>
+			<StyledTableCell padding = "normal">Price $</StyledTableCell>
 			<StyledTableCell padding = "normal">Date</StyledTableCell>
 			{/* <TableCell align="center"></TableCell> */}
 			</TableRow>
@@ -241,14 +251,14 @@ return (
 					{isEdit ? (
 					<div>
 						<TableCell padding="normal">
-						<input
+						<input c
 							value={row.firstname}
 							name="firstname"
 							onChange={(e) => handleInputChange(e, i)}
 						/>
 						</TableCell>
 						<TableCell padding="normal">
-						<input
+						<input type="number"
 							value={row.price}
 							name="price"
 							onChange={(e) => handleInputChange(e, i)}
@@ -256,6 +266,7 @@ return (
 						</TableCell>
 						<TableCell padding="normal">
 						<input
+							// placeholder={ifDate(row)}
 							value={row.date}
 							name="date"
 							onChange={(e) => handleInputChange(e, i)}
@@ -265,21 +276,22 @@ return (
 					) : (
 						<div>
 						<TableCell padding="normal">
-						<input
+						<input type="text"
 							value={row.firstname}
 							name="firstname"
 							onChange={(e) => handleInputChange(e, i)}
 						/>
 						</TableCell>
 						<TableCell padding="normal">
-						<input
+						<input type="number"
 							value={row.price}
 							name="price"
 							onChange={(e) => handleInputChange(e, i)}
 						/>
 						</TableCell>
 						<TableCell padding="normal">
-						<input
+						<input 
+							// placeholder={ifDate(row)}
 							value={row.date}
 							name="date"
 							onChange={(e) => handleInputChange(e, i)}
