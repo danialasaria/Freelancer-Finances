@@ -17,7 +17,7 @@ function App() {
       style={{ minHeight: "100vh "}}
     >
       {/*minwidth 400px - fix spacing*/}
-      <div className = "w-50">
+      <div className = "w-100">
       {/* <div className = "w-75"> */}
         <Router>
           <AuthProvider>

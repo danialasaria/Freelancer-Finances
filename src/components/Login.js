@@ -66,9 +66,12 @@ export default function Login() {
     }
     return (
         <>
-           <Card>
+            <div className = "text-bold" style = {{position: 'absolute', top: '3vw', right: '28vw'}}>
+            Sign up to start keeping track of your lessons! - I promise you won’t get spammed
+            </div>
+           <Card className = "w-50" style={{margin: 'auto', width: '50%'}}>
                <Card.Body>
-                   <h2 className="text-center mb-4">
+                   <h2 className="text-center mb-4" >
                        Log In
                    </h2>
                    {error && <Alert variant="danger">{error}</Alert>}

@@ -42,7 +42,7 @@ const Signup = () => {
     }
     return (
         <>
-           <Card>
+           <Card className = "w-50" style={{margin: 'auto', width: '50%'}}>
                <Card.Body>
                    <h2 className="text-center mb-4">
                        Sign Up

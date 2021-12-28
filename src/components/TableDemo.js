@@ -1,13 +1,13 @@
 import React, { useState  } from "react";
-import CreateIcon from "@material-ui/icons/Create";
+// import CreateIcon from "@material-ui/icons/Create";
 import {
 	Box, Button, Snackbar, Table,
 	TableBody, TableCell, TableHead, TableRow
 } from "@material-ui/core";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import AddBoxIcon from "@material-ui/icons/AddBox";
-import DoneIcon from "@material-ui/icons/Done";
-import ClearIcon from "@material-ui/icons/Clear";
+// import DoneIcon from "@material-ui/icons/Done";
+// import ClearIcon from "@material-ui/icons/Clear";
 import { makeStyles } from "@material-ui/core/styles";
 import Alert from "@material-ui/lab/Alert";
 import Dialog from "@material-ui/core/Dialog";
@@ -23,6 +23,8 @@ import TableContainer from '@mui/material/TableContainer';
 import Paper from '@mui/material/Paper';
 import "../Styles/Table.css"
 import Statistics from "./Stats"
+// import TablePagination from '@mui/material/TablePagination';
+
 // Creating styles
 const useStyles = makeStyles({
 	root: {
@@ -39,6 +41,7 @@ const useStyles = makeStyles({
 });
 
 const TableDemo = ({setRows, rows}) => {
+
 	// Creating style object
 	const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
@@ -65,7 +68,6 @@ const TableDemo = ({setRows, rows}) => {
 	// which we can update by calling on setRows function
 	// const [rows, setRows] = useState(Info);
 		//  { id: "", firstname: "", price: "", date: "" },
-
 
 	// Initial states
 	const [open, setOpen] = React.useState(true);
@@ -96,13 +98,13 @@ const TableDemo = ({setRows, rows}) => {
 	};
 
 	// Function to handle edit
-	const handleEdit = (i) => {
+	// const handleEdit = (i) => {
 		// If edit mode is true setEdit will
 		// set it to false and vice versa
-		setEdit(!isEdit);
+		// setEdit(!isEdit);
 		// setDisable(true);
 		// setOpen(true);
-	};
+	// };
 
     const convertEmail = (userEmail) => {
 		// If edit mode is true setEdit will
@@ -141,6 +143,7 @@ const TableDemo = ({setRows, rows}) => {
 		const list = [...rows];
 		list[index][name] = value;
 		setRows(list);
+		//every input change should recalibrate the stats 
 		Statistics.forceUpdate()
 		handleSave()
 	};
@@ -169,16 +172,17 @@ const TableDemo = ({setRows, rows}) => {
 		setShowConfirm(false);
 	};
 
-	function ifDate(row) {
-		if(row.date === "")
-		{
-			return "11/05/2001"
-		}
-		console.log(row.date)
-		return row.date
-	}
+	// function ifDate(row) {
+	// 	if(row.date === "")
+	// 	{
+	// 		return "11/05/2001"
+	// 	}
+	// 	console.log(row.date)
+	// 	return row.date
+	// }
 		
 return (
+	<Paper sx={{ width: '100%', overflow: 'hidden' }}>
 	<TableContainer component={Paper}>
 	<TableBody>
 	<Snackbar
@@ -233,6 +237,8 @@ return (
 		</div>
 		{/* <TableRow align="center"></TableRow> */}
 		<Table
+		stickyHeader 
+		aria-label="sticky table"
 		className={classes.table}
 		size="small"
 		aria-label="a dense table"
@@ -355,6 +361,16 @@ return (
 	</Box>
 	</TableBody>
 	</TableContainer>
+	{/* <TablePagination
+        rowsPerPageOptions={[10, 25, 100]}
+        component="div"
+        count={rows.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      /> */}
+	</Paper>
 );
 
 }

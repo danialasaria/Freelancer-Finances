@@ -17,6 +17,7 @@ const convertEmail = (userEmail) => {
 
 function MainTable() {
 	var Info = []
+	var length
 	const { currentUser } = useAuth()
 	useEffect(() => {
 		// Runs ONCE after initial rendering
@@ -33,15 +34,22 @@ function MainTable() {
 				console.log("no data there")
 				}
 			});
+		console.log(Object.keys(Info).length)
 	  }, []);
+	  //Set parent state rows in MainTable so child components can inherit and edit in sync
 	  const [rows, setRows] = useState(Info);
-	  console.log(rows)
 	return (
 		<div>
-			<div style = {{position: 'absolute', top: '3vw',}}>
-			<Statistics rows = {rows}/>
+			<div style = {{position: 'absolute', top: '3vw', padding: "15px"}}>
+			<Statistics rows = {rows} length = {length}/>
 			</div>
 			{/* Header with inline css */}
+			<div className = "w-50" style={{margin: 'auto', width: '50%'}}>
+			<h>
+			<div className = "text-bold" style = {{position: 'absolute', top: '3vw'}}>
+			Start logging your lessons by pressing "ADD LESSON” and filling in the relevant information!
+			</div>
+			</h>
 			<h1
 				style={{
 					display: 'flex', justifyContent: 'center', padding: '15px',
@@ -51,7 +59,7 @@ function MainTable() {
 			</h1>
 			{/* Table component below header */}
 			<TableDemo setRows = {setRows} rows = {rows}/>
-			{/* { TableDemo(Info)} */}
+			</div>
 		</div>
 	)
 }

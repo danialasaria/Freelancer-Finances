@@ -3,13 +3,18 @@ import React, { useState  } from "react";
 
 const Statistics = ({rows}) => {
     // const [rows, setRows] = useState(Info);
-    console.log(rows)
     // function totalMade() {
         var total = 0
         console.log("Stats called")
 		for(let i = 0; i < rows.length; i++)
 		{
-            total += parseInt(((rows[i]['price'])))
+            if((rows[i]['price'])==="")
+            {
+                continue
+            }
+            else{
+                total += parseInt(((rows[i]['price'])))
+            }
             console.log(total)
         }
         // return total

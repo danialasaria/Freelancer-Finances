@@ -23,7 +23,7 @@ export default function Profile() {
   return (
     <>
     {/* <TableData className = "w-100" style={{maxWidth: "300px "}}/> */}
-      <Card className="mt-4">
+      <Card className = "w-50" style={{margin: 'auto', width: '50%'}}>
         <Card.Body>
           <h2 className="text-center mb-4">Profile</h2>
           {error && <Alert variant="danger">{error}</Alert>}
