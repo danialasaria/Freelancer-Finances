@@ -22,6 +22,7 @@ import { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import Paper from '@mui/material/Paper';
 import "../Styles/Table.css"
+import Statistics from "./Stats"
 // Creating styles
 const useStyles = makeStyles({
 	root: {
@@ -37,7 +38,7 @@ const useStyles = makeStyles({
 	},
 });
 
-function TableDemo(Info) {
+const TableDemo = ({setRows, rows}) => {
 	// Creating style object
 	const StyledTableCell = styled(TableCell)(({ theme }) => ({
 	[`&.${tableCellClasses.head}`]: {
@@ -62,7 +63,7 @@ function TableDemo(Info) {
 
 	// Defining a state named rows
 	// which we can update by calling on setRows function
-	const [rows, setRows] = useState(Info);
+	// const [rows, setRows] = useState(Info);
 		//  { id: "", firstname: "", price: "", date: "" },
 
 
@@ -83,11 +84,12 @@ function TableDemo(Info) {
 
 	// Function For adding new row object
 	const handleAdd = () => {
+		const current = new Date();
 		setRows([
 			...rows,
 			{
 				id: rows.length + 1, firstname: "",
-				price: " ", date: ""
+				price: "0", date: `${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()}`
 			},
 		]);
 		setEdit(true);
@@ -139,8 +141,8 @@ function TableDemo(Info) {
 		const list = [...rows];
 		list[index][name] = value;
 		setRows(list);
+		Statistics.forceUpdate()
 		handleSave()
-		
 	};
 
 	// Showing delete confirmation to users

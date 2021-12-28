@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import TableDemo from "./TableDemo";
 import { database, ref } from '../firebase';
 import { useAuth } from '../contexts/AuthContext'
@@ -34,10 +34,12 @@ function MainTable() {
 				}
 			});
 	  }, []);
+	  const [rows, setRows] = useState(Info);
+	  console.log(rows)
 	return (
 		<div>
 			<div style = {{position: 'absolute', top: '3vw',}}>
-			{Statistics(Info) }
+			<Statistics rows = {rows}/>
 			</div>
 			{/* Header with inline css */}
 			<h1
@@ -48,7 +50,8 @@ function MainTable() {
 				Freelancer Finances
 			</h1>
 			{/* Table component below header */}
-			{ TableDemo(Info)}
+			<TableDemo setRows = {setRows} rows = {rows}/>
+			{/* { TableDemo(Info)} */}
 		</div>
 	)
 }

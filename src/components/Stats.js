@@ -1,16 +1,19 @@
 import React, { useState  } from "react";
 
 
-export default function Statistics(Info) {
-    const [rows, setRows] = useState(Info);
-    function totalMade() {
+const Statistics = ({rows}) => {
+    // const [rows, setRows] = useState(Info);
+    console.log(rows)
+    // function totalMade() {
         var total = 0
+        console.log("Stats called")
 		for(let i = 0; i < rows.length; i++)
 		{
-			total += parseInt(((rows[i]['price'])))
+            total += parseInt(((rows[i]['price'])))
+            console.log(total)
         }
-        return total
-	};
+        // return total
+	// };
 
 
     return (
@@ -23,8 +26,10 @@ export default function Statistics(Info) {
 				Stats
 			</h1>   
             <div>
-                Total Money Made : {totalMade()}
+                Total Money Made : {total}
             </div>
         </div>
     )
 }
+
+export default Statistics
