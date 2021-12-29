@@ -66,8 +66,8 @@ export default function Login() {
     }
     return (
         <>
-            <div className = "text-bold" style = {{position: 'absolute', top: '3vw', right: '28vw'}}>
-            Sign up to start keeping track of your lessons! - I promise you won’t get spammed
+            <div className = "text-bold" style = {{position: 'absolute', top: '3vw', right: '19vw'}}>
+            Sign up to start keeping track of your lessons! We promise to only use your email for authentication/saving your logs
             </div>
            <Card className = "w-50" style={{margin: 'auto', width: '50%'}}>
                <Card.Body>

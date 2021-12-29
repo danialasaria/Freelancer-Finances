@@ -44,21 +44,25 @@ function MainTable() {
 			<Statistics rows = {rows} length = {length}/>
 			</div>
 			{/* Header with inline css */}
-			<div className = "w-50" style={{margin: 'auto', width: '50%'}}>
+			<div className = "w-50" className="table" style={{margin: 'auto', width: '50%'}}>
 			<h>
 			<div className = "text-bold" style = {{position: 'absolute', top: '3vw'}}>
-			Start logging your lessons by pressing "ADD LESSON” and filling in the relevant information!
+			Start logging your lessons by pressing "ADD LESSON” and filling in the relevant information
+			<br></br>
+			Everything will save automatically!
 			</div>
 			</h>
 			<h1
 				style={{
 					display: 'flex', justifyContent: 'center', padding: '15px',
-					border: '13px solid #b4f0b4', color: 'rgb(11, 167, 11)'
+					border: '13px solid #b4f0b4', color: 'rgb(11, 167, 11)', position: 'absolute', top: '10vw'
 				}}>
 				Freelancer Finances
 			</h1>
 			{/* Table component below header */}
+			<div style={{position: 'absolute', top: '18vw'}}>
 			<TableDemo setRows = {setRows} rows = {rows}/>
+			</div>
 			</div>
 		</div>
 	)
