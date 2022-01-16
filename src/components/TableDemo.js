@@ -22,7 +22,6 @@ import { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import Paper from '@mui/material/Paper';
 import "../Styles/Table.css"
-import Statistics from "./Stats"
 // import TablePagination from '@mui/material/TablePagination';
 
 // Creating styles
@@ -90,8 +89,8 @@ const TableDemo = ({setRows, rows}) => {
 		setRows([
 			...rows,
 			{
-				id: rows.length + 1, firstname: "",
-				price: "0", date: `${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()}`
+				id: rows.length + 1, name: "",
+				price: 0, date: `${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()}`
 			},
 		]);
 		setEdit(true);
@@ -120,7 +119,7 @@ const TableDemo = ({setRows, rows}) => {
     const Push = () => {
 		const userEmail = convertEmail(currentUser.email)
         database.ref(userEmail).set({
-          rows : rows,
+		  rows : rows,
         }).catch(alert);
       }
 
@@ -144,7 +143,7 @@ const TableDemo = ({setRows, rows}) => {
 		list[index][name] = value;
 		setRows(list);
 		//every input change should recalibrate the stats 
-		Statistics.forceUpdate()
+		// Statistics.forceUpdate()
 		handleSave()
 	};
 
@@ -260,8 +259,8 @@ return (
 					<div>
 						<TableCell padding="normal">
 						<input c
-							value={row.firstname}
-							name="firstname"
+							value={row.name}
+							name="name"
 							onChange={(e) => handleInputChange(e, i)}
 						/>
 						</TableCell>
@@ -285,8 +284,8 @@ return (
 						<div>
 						<TableCell padding="normal">
 						<input type="text"
-							value={row.firstname}
-							name="firstname"
+							value={row.name}
+							name="name"
 							onChange={(e) => handleInputChange(e, i)}
 						/>
 						</TableCell>

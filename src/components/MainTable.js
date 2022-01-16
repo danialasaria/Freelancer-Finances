@@ -3,6 +3,7 @@ import TableDemo from "./TableDemo";
 import { database, ref } from '../firebase';
 import { useAuth } from '../contexts/AuthContext'
 import Statistics from './Stats'
+import { Button } from "react-bootstrap"
 
 const convertEmail = (userEmail) => {
 	// If edit mode is true setEdit will
@@ -16,8 +17,7 @@ const convertEmail = (userEmail) => {
 };
 
 function MainTable() {
-	var Info = []
-	var length
+	var LessonInfo = []
 	const { currentUser } = useAuth()
 	useEffect(() => {
 		// Runs ONCE after initial rendering
@@ -28,20 +28,21 @@ function MainTable() {
 		userData = snapshot.val();
 			if(userData)
 				{
-					Info = Object.assign(Info, userData)
+					LessonInfo = Object.assign(LessonInfo, userData)
 				}
 		 	else {
 				console.log("no data there")
 				}
 			});
-		console.log(Object.keys(Info).length)
 	  }, []);
 	  //Set parent state rows in MainTable so child components can inherit and edit in sync
-	  const [rows, setRows] = useState(Info);
+	  const [rows, setRows] = useState(LessonInfo);
+	//   const [stats, setStats] = useState(StatInfo)
 	return (
 		<div>
 			<div style = {{position: 'absolute', top: '3vw', padding: "15px"}}>
-			<Statistics rows = {rows} length = {length}/>
+			{/* <Button onClick={Statistics.forceUpdate()}>Update Stats</Button>  */}
+			<Statistics lessons = {rows}/>
 			</div>
 			{/* Header with inline css */}
 			<div className = "w-50" className="table" style={{margin: 'auto', width: '50%'}}>
