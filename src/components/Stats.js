@@ -7,13 +7,11 @@ import React, { useState, useEffect  } from "react";
 //     {name: "a", balance: 0},
 // ]);
 const Statistics = ({lessons}) => {
-    console.log(lessons)
-    const [Profit, setProfit] = useState(0);
+    const [Profit, setProfit] = useState();
+    let studentcount = 0
 
     //commenting this out creates turner 11
-    const [rows, setRows] = useState([
-        // {name: "", balance: 0},
-    ]);
+    const [rows, setRows] = useState([]);
         function totalMade() {
             var total = 0
             for(let i = 0; i < lessons.length; i++)
@@ -36,42 +34,38 @@ const Statistics = ({lessons}) => {
 
         function handleAdd(nameval, balanceval)
         {
-            setRows([
-                ...rows,
-                {
-                    name: nameval,
-                    balance: balanceval
-                },
-            ]);
+            let updatedrows = rows
+            updatedrows[studentcount] = {name: nameval,balance: balanceval}
+            studentcount++;
+            setRows(updatedrows);
+            // setRows(rows => { const Rows = [
+            //     ...rows,
+            //     {
+            //         name: nameval,
+            //         balance: balanceval
+            //     },
+            // ]});
+            debugger
         }
 
         const calculateBalances = () => {
-            console.log(lessons)
             for(let i = 0; i < lessons.length; i++)
             {
-                console.log(rows)
                 // var found = false
                 if((lessons[i]['price'])==="")
                 {
-                    console.log("EMPTY ROW")
                     continue
                 }
                 else{
-                    console.log("ENTERED ELSE")
                     //loop through rows of names to see if already
                     //instead find index of name in balance - if yes add price 
                     //if no then add name
                     // for(let j = 0; j < lessons.length; j++)
                     // {
-                        console.log(rows)
-                        console.log(lessons[i]['name'])
                         const index =  rows.findIndex( (element) => element.name === lessons[i]['name']);
                         // var two = list[0]['name']
-                        console.log(lessons[i]['name'])
-                        console.log(index)
                         if(index!= -1)
                         {
-                            console.log("FOund same")
                             handleBalance(index, lessons[i]['price'])
                             // rows[index]['balance'] += parseInt(((lessons[i]['price'])))
                             // found = true
@@ -79,7 +73,6 @@ const Statistics = ({lessons}) => {
                         }
                         else if(index == -1)
                         {
-                            console.log("Not Found")
                             //length isn't increasing after line 65
                             //do i have to handle this in a separate func?
                             handleAdd(lessons[i]['name'], lessons[i]['price']);
@@ -92,8 +85,6 @@ const Statistics = ({lessons}) => {
                             // ]);
                             // rows[rows.length-1]['name'] = lessons[i]['name']
                             // rows[rows.length-1]['balance'] = lessons[i]['price']
-                            console.log(rows)
-                            console.log(i)
                         }
                     }
                     // if(!found)
@@ -115,8 +106,9 @@ const Statistics = ({lessons}) => {
                     // }
             }            
             // setRows(list)
-            console.log(rows)
         }
+
+        //clear state each time this is called? (careate func to set state to empty array)
         function Update() {
             console.log("Update called")
             setProfit(totalMade())

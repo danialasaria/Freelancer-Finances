@@ -170,15 +170,6 @@ const TableDemo = ({setRows, rows}) => {
 	const handleNo = () => {
 		setShowConfirm(false);
 	};
-
-	// function ifDate(row) {
-	// 	if(row.date === "")
-	// 	{
-	// 		return "11/05/2001"
-	// 	}
-	// 	console.log(row.date)
-	// 	return row.date
-	// }
 		
 return (
 	<Paper sx={{ width: '100%', overflow: 'hidden' }}>
