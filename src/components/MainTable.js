@@ -18,6 +18,7 @@ const convertEmail = (userEmail) => {
 
 function MainTable() {
 	var LessonInfo = []
+	console.log("HIII")
 	const { currentUser } = useAuth()
 	useEffect(() => {
 		// Runs ONCE after initial rendering
